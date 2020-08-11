@@ -1,5 +1,3 @@
-const { last, update } = require("lodash")
-
 const GAME_TEAM = {
     BLUE    : 100,
     RED     : 200,
@@ -441,13 +439,9 @@ const parseMinion = () => {
             // Filter out adding a wrong minion as a early or late hit.
             // For example, Siege minion was killed by a champion.
             // In this case, goldDiff will be greater than 60, but if not, it is a wrong hit.
-            if (minionType === MINION_NAME.SIEGE || minionType === MINION_NAME.SUPER) {
-                console.log("GoldDiff:", champStats.goldDiff, "CS Diff:", champStats.csDiff);
-            }
             if ((minionType === MINION_NAME.SIEGE || minionType === MINION_NAME.SUPER) &&
                  minionGold < champStats.goldDiff
             ) {
-                console.log("Gold Error. GoldDiff:", champStats.goldDiff, "CS Diff:", champStats.csDiff);
                 continue;
             }
 
@@ -499,7 +493,7 @@ const parseMinion = () => {
     }
 
     const main = async () => {
-        const gamePath = __dirname + getPathFromCmd();
+        const gamePath = __dirname + "/" + getPathFromCmd();
         const gameData = await readGame(gamePath);
         const timeline = gameData.timeline;
 
