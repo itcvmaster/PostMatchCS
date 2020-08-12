@@ -78,6 +78,6 @@ From Appendix5, we can get attribute `Minion_Name` of `Missing_Minions`.
 And based on those `Minion_Names` and the equation from Appendix6, we can simply calculate `CS Gold Lost by Turret`.
 
 ### Appendix8: Future Works
-- We should determine Champion's `Role` or `Location` to estimate `CS Count Lost by Turret`. Because in `Blind` Game, there is no dedicated `Role`.
+- We should determine Champion's `Role` or `Location` to estimate `CS Count Lost by Turret`. Because in `Blind` Game, no one is dedicated to special `Role`.
 - We can improve accuracy by checking in `Champion_Name` and `CoolDown_Of_Ability` for Ezeal, Zigs, Draven, Jhin and Gankplank.
 - In Appendix3, we can check Gold earned from `Kills`, `Assists`, `Turret_Destroyed`, `Turret_Plate_Taken` to improve accuracy.
