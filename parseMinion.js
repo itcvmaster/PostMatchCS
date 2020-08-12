@@ -118,24 +118,13 @@ const mapRegions = [
 * Parse Game Json Data.
 */
 const parseMinion = () => {
-    this.state = {
-        gamePath:             "",
-  
-        champStats:           {},
-        turretSlices:         [],
-        lastMinionSlices:     [],
 
-        csCountLost: {
-            csLateHit:        {},   // CS Count For Late Last Hit
-            csEarlyHit:       {},   // CS Count For Early Last Hit
-            csLostByTurret:   {},   // CS Count Lost by Turret
-    
-        },
-        csGoldLost: {
-            goldLateHit:      {},   // Missing Gold for Late Last Hit
-            goldEarlyHit:     {},   // Missing Gold for Early Last Hit
-            goldLostByTurret: {},   // Missing Gold for Lost by Turret    
-        },
+    this.state = {
+        gamePath:         "",
+        champStats:       {},
+        turretSlices:     [],
+        lastMinionSlices: [],
+        missingMinions:   []
     };
 
     /*
@@ -322,7 +311,7 @@ const parseMinion = () => {
         });
 
         // Initialize
-        let missingMinions = [
+        let minionsWrongHit = [
             {
                 type:      MINION_NAME.RANGED,      // Type of Minion
                 gold:      MINION_GOLD.RANGED,      // Gold of this minion
@@ -331,14 +320,14 @@ const parseMinion = () => {
             }
         ];
 
-        missingMinions = [];
+        minionsWrongHit = [];
 
         // Estimate Early Hit Minions
         const missedCount = nearMinions.length - champStats.csDiff;
         for (const minion of nearMinions) {
 
             // Check if filled out.
-            if (missedCount <= missingMinions.length) {
+            if (missedCount <= minionsWrongHit.length) {
                 break;
             }
             
@@ -415,14 +404,14 @@ const parseMinion = () => {
 
             // if Damage is not enough, champion dealt damage onto it.
             if (minionHealtDiff >= pureDamage + ATTACK_DAMAGE.CHAMPION) {
-                missingMinions.push({
+                minionsWrongHit.push({
                     confident: confident,
                     type:      minionType,
                     gold:      minionGold,
                     reason:    MINION_NAME.EARLY_HIT,
                 });    
             } else {
-                missingMinions.push({
+                minionsWrongHit.push({
                     confident: confident,
                     type:      minionType,
                     gold:      minionGold,
@@ -432,9 +421,9 @@ const parseMinion = () => {
         }
 
         // Fill Out Lacking Minions
-        const calculatedCount = missingMinions.length;
+        const calculatedCount = minionsWrongHit.length;
         for (let i = 0; i < missedCount - calculatedCount; i++) {
-            missingMinions.push({
+            minionsWrongHit.push({
                 type:      MINION_NAME.RANGED,      // Type of Minion
                 gold:      MINION_GOLD.RANGED,      // Gold of this minion
                 reason:    MINION_NAME.EARLY_HIT,   // Reason of missing
@@ -444,9 +433,9 @@ const parseMinion = () => {
 
         // TODO: Arrange Minions by confident.
         // Reduce the size of array so as to make it not exceed `missedCount`.
-        missingMinions = missingMinions.slice(0, missedCount);
+        minionsWrongHit = minionsWrongHit.slice(0, missedCount);
 
-        return missingMinions;
+        return minionsWrongHit;
     }
 
     /*
@@ -521,25 +510,19 @@ const parseMinion = () => {
     * [param] champ: champion stats that contains new cs count, and new gold count as well as location.
     * [param] slice: slices of minions
     */
-    const parseMinionSlice = (minionSlice, summonerName, turretSlices, gameTime) => {
+    const parseMinionSlice = ({minionSlices, summonerName, turretSlices, gameTime}) => {
 
         const state = this.state;
         const champStats = state.champStats[summonerName];
 
         // Initialize
-        if (state.csCountLost.csEarlyHit[summonerName] == undefined) {
-            state.csCountLost.csLateHit[summonerName]       = 0;
-            state.csCountLost.csEarlyHit[summonerName]      = 0;
-            state.csCountLost.csLostByTurret[summonerName]  = 0;
-
-            state.csGoldLost.goldLateHit[summonerName]      = 0;
-            state.csGoldLost.goldEarlyHit[summonerName]     = 0;
-            state.csGoldLost.goldLostByTurret[summonerName] = 0;
+        if (state.missingMinions[summonerName] == undefined) {
+            state.missingMinions[summonerName] = [];
         }
 
         // Get enemy minions dead.
         let deadMinions = [];
-        for (const minion of Object.values(minionSlice)) {
+        for (const minion of Object.values(minionSlices)) {
 
             // Find Dead minions among enemy minions.
             if (
@@ -562,17 +545,11 @@ const parseMinion = () => {
         }
 
         // Calculate CS Count of Missing Cases
-        const minionsMissed       = getMissingMinions({deadMinions, minionSlice, turretSlices, champStats, gameTime});
-        const minionsEarlyHit     = minionsMissed.filter(minion => minion.reason === MINION_NAME.EARLY_HIT);
-        const minionsLateHit      = minionsMissed.filter(minion => minion.reason === MINION_NAME.LATE_HIT);
-        const minionsLostByTurret = getMinionsLostByTurret({deadMinions, minionSlice, turretSlices, champStats, gameTime});
+        const minionsWrongHit     = getMissingMinions({deadMinions, minionSlices, turretSlices, champStats, gameTime});
+        const minionsLostByTurret = getMinionsLostByTurret({deadMinions, minionSlices, turretSlices, champStats, gameTime});
 
-        state.csCountLost.csEarlyHit     [summonerName] += minionsEarlyHit.    length;
-        state.csCountLost.csLateHit      [summonerName] += minionsLateHit.     length;
-        state.csCountLost.csLostByTurret [summonerName] += minionsLateHit.     length;
-        state.csGoldLost.goldEarlyHit    [summonerName] += minionsEarlyHit.    reduce((sum, minion) => (sum + minion.gold), 0);
-        state.csGoldLost.goldLateHit     [summonerName] += minionsLateHit.     reduce((sum, minion) => (sum + minion.gold), 0);
-        state.csGoldLost.goldLostByTurret[summonerName] += minionsLostByTurret.reduce((sum, minion) => (sum + minion.gold), 0);
+        state.missingMinions[summonerName] = state.missingMinions[summonerName].concat(minionsWrongHit);
+        state.missingMinions[summonerName] = state.missingMinions[summonerName].concat(minionsLostByTurret);
     }
 
     /*
@@ -597,15 +574,36 @@ const parseMinion = () => {
 
             // Loop all minions inside time slice
             const summonerName = championSlices[0].name;
-            parseMinionSlice(minionSlices, summonerName, turretSlices, gameTime);
+            parseMinionSlice({minionSlices, summonerName, turretSlices, gameTime});
 
             // Backup Minion List
             this.state.lastMinionSlices = minionSlices;
         }
 
         // Output
-        console.log(this.state.csCountLost);
-        console.log(this.state.csGoldLost);
+        for (const key of Object.keys(this.state.missingMinions)) {
+            const missingMinions      = this.state.missingMinions[key];
+            const minionsEarlyHit     = missingMinions.filter(minion => minion.reason === MINION_NAME.EARLY_HIT);
+            const minionsLateHit      = missingMinions.filter(minion => minion.reason === MINION_NAME.LATE_HIT);
+            const minionsTurretHit    = missingMinions.filter(minion => minion.reason === MINION_NAME.TURRET_HIT);
+            const csGoldEarlyHit      = minionsEarlyHit .reduce((sum, minion) => (sum + minion.gold), 0);
+            const csGoldLateyHit      = minionsLateHit  .reduce((sum, minion) => (sum + minion.gold), 0);
+            const csGoldTurretHit     = minionsTurretHit.reduce((sum, minion) => (sum + minion.gold), 0);
+
+            console.log("---------", key, "---------");
+            console.log(missingMinions);
+            console.log("--------- CS Count For Early Last Hit ---------");
+            console.log("CS Count For Early Last Hit:", minionsEarlyHit.length);
+            console.log("CS Gold  For Early Last Hit:", csGoldEarlyHit);
+    
+            console.log("--------- CS Count For Late Last Hit ---------");
+            console.log("CS Count For Late  Last Hit:", minionsLateHit.length);
+            console.log("CS Gold  For Late  Last Hit:", csGoldLateyHit);
+    
+            console.log("--------- CS Count Lost By Turret ---------");
+            console.log("CS Count Lost by Turret:", minionsTurretHit.length);
+            console.log("CS Gold  Lost by Turret:", csGoldTurretHit);    
+        }
     }
 
     main();
