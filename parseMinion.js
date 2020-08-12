@@ -1,92 +1,100 @@
 const GAME_TEAM = {
-    BLUE    : 100,
-    RED     : 200,
-    NETURAL : 300,
+    BLUE:           100,
+    RED:            200,
+    NETURAL:        300,
+}
+
+const CHAMPION_ROLE = {
+    TOP:            "Top",
+    JUNGLE:         "Jungle",
+    MID:            "Mid",
+    BOT:            "Bot",
+    SUPPORT:        "Support",
 }
 
 const MINION_GOLD = {
-    RANGED:       14,
-    MELEE:        21,
-    SIEGE:        60,
-    SUPER:        60,
-    UPGRADE_SEC:  90,   // Siege minion costs 3 gold more every 90 seconds.
-    UPGRADE_GOLD: 3,    // Siege minion costs 3 gold more every 90 seconds.
-    UPGRADE_START:135,  // 2:15 mins or 135s
-    UPGRADE_END:  1035, // 17:15 mins or 1035s.
-    UPGRADE_MAX:  10,   // 10 times of upgrade is possible, that is 15 mins
+    RANGED:         14,
+    MELEE:          21,
+    SIEGE:          60,
+    SUPER:          60,
+    UPGRADE_SEC:    90,   // Siege minion costs 3 gold more every 90 seconds.
+    UPGRADE_GOLD:   3,    // Siege minion costs 3 gold more every 90 seconds.
+    UPGRADE_START:  135,  // 2:15 mins or 135s
+    UPGRADE_END:    1035, // 17:15 mins or 1035s.
+    UPGRADE_MAX:    10,   // 10 times of upgrade is possible, that is 15 mins
 }
 
 const MINION_NAME = {
-    MINION:     "MINION",
-    RANGED:     "RANGED",
-    MELEE:      "MELEE",
-    SIEGE:      "SIEGE",
-    SUPER:      "SUPER",
+    MINION:         "MINION",
+    RANGED:         "RANGED",
+    MELEE:          "MELEE",
+    SIEGE:          "SIEGE",
+    SUPER:          "SUPER",
 
-    EARLY_HIT:  "Early Hit",
-    LATE_HIT:   "Late Hit",
-    TURRET_HIT: "Turret Hit",
+    EARLY_HIT:      "Early Hit",
+    LATE_HIT:       "Late Hit",
+    TURRET_HIT:     "Turret Hit",
 }
 
 const ATTACK_RANGE = {
-    RANGED_MINION   : 500,
-    SIEGE_MINION    : 300,
-    SUPER_MINION    : 110,
-    MELEE_MINION    : 110,
-    TURRET          : 750,
-    CHAMPION_ATTACK : 600, // Skill Range Considered.
-    CHAMPION_SKILL  : 900, // Skill Range Considered.
+    RANGED_MINION:  500,
+    SIEGE_MINION:   300,
+    SUPER_MINION:   110,
+    MELEE_MINION:   110,
+    TURRET:         750,
+    CHAMPION_ATTACK: 600, // Skill Range Considered.
+    CHAMPION_SKILL: 900, // Skill Range Considered.
 }
 
 const ATTACK_DAMAGE = {
-    RANGED_MINION: 24,  // + 4.5
-    SIEGE_MINION:  41,  // + 1.5
-    SUPER_MINION:  230, // + 5
-    MELEE_MINION:  12,  // + 3.41
-    TURRET      :  152, // + 9
-    CHAMPION    :  50,  // Minimum damage can champion deal to minion - 50
+    RANGED_MINION:  24,  // + 4.5
+    SIEGE_MINION:   41,  // + 1.5
+    SUPER_MINION:   230, // + 5
+    MELEE_MINION:   12,  // + 3.41
+    TURRET:         152, // + 9
+    CHAMPION:       50,  // Minimum damage can champion deal to minion - 50
 }
 
 const MOVEMENT_SPEED = {
-    MINION:       300,
+    MINION:         300,
 }
 
 const Midlane = [
-    [10110.5595703, 10378.2197265625],
-    [10883.7998046, 9694.2001953125],
-    [8326.16015625, 7047.33984375],
-    [4846.58007812, 3954.3798828125],
-    [4103.08007812, 4608.66015625],
-    [6720.20019531, 7047.33984375],
-    [9010.1796875, 9307.580078125]
+    [10110.5595703,     10378.2197265625],
+    [10883.7998046,     9694.2001953125],
+    [8326.16015625,     7047.33984375],
+    [4846.58007812,     3954.3798828125],
+    [4103.08007812,     4608.66015625],
+    [6720.20019531,     7047.33984375],
+    [9010.1796875,      9307.580078125]
 ];
   
 const TopLane = [
-    [1575.1800537109375, 5471.1201171875],
-    [1634.6600341796875, 10764.83984375],
-    [2348.419921875, 11597.5595703125],
-    [3002.699951171875, 12192.3603515625],
-    [4162.56005859375, 12668.2001953125],
-    [4638.39990234375, 12965.599609375],
-    [9277.83984375, 13054.8203125],
-    [9277.83984375, 14065.98046875],
-    [2764.780029296875, 14065.98046875],
-    [534.280029296875, 12192.3603515625],
-    [504.5400085449219, 5441.3798828125]
+    [1575.18005371093,  5471.1201171875],
+    [1634.66003417968,  10764.83984375],
+    [2348.419921875,    11597.5595703125],
+    [3002.69995117187,  12192.3603515625],
+    [4162.56005859375,  12668.2001953125],
+    [4638.39990234375,  12965.599609375],
+    [9277.83984375,     13054.8203125],
+    [9277.83984375,     14065.98046875],
+    [2764.78002929687,  14065.98046875],
+    [534.280029296875,  12192.3603515625],
+    [504.540008544921,  5441.3798828125]
 ];
     
 const BotLane = [
-    [13263, 9010.1796875],
-    [13292.740234375, 3627.239990234375],
-    [12519.5, 3002.699951171875],
-    [11567.8203125, 2616.080078125],
-    [10735.099609375, 1396.739990234375],
-    [5709.0400390625, 1218.300048828125],
-    [5709.0400390625, 266.6199951171875],
-    [11686.7802734375, 207.13999938964844],
-    [14363.3798828125, 1634.6600341796875],
-    [14541.8203125, 5828],
-    [14541.8203125, 8861.48046875]
+    [13263,             9010.1796875],
+    [13292.740234375,   3627.239990234375],
+    [12519.5,           3002.699951171875],
+    [11567.8203125,     2616.080078125],
+    [10735.099609375,   1396.739990234375],
+    [5709.0400390625,   1218.300048828125],
+    [5709.0400390625,   266.6199951171875],
+    [11686.7802734375,  207.13999938964844],
+    [14363.3798828125,  1634.6600341796875],
+    [14541.8203125,     5828],
+    [14541.8203125,     8861.48046875]
 ];
     
 const mapRegions = [
@@ -164,6 +172,7 @@ const parseMinion = () => {
         if (this.state.champStats[summonerName] == undefined) {
             this.state.champStats[summonerName]          = {};
             this.state.champStats[summonerName].team     = 0;
+            this.state.champStats[summonerName].role     = "TOP";
             this.state.champStats[summonerName].health   = 0;
             this.state.champStats[summonerName].csDiff   = 0;
             this.state.champStats[summonerName].lastCs   = 0;
@@ -195,6 +204,49 @@ const parseMinion = () => {
         );
 
         return Math.sqrt(dist);
+    }
+    /*
+    * Calculate Minion Gold from minion name and game time.
+    * [param] minionName: Minion Name
+    * [param] gameTime  : Game Time elapsed in second
+    * [retrn] minionType (String) and minionGold (Number).
+    */
+    const calcMinionGold = (minionName, gameTime) => {
+        
+        // Initialize
+        let minionType = MINION_NAME.RANGED;
+        let minionGold = MINION_GOLD.RANGED;
+
+        // Get Minion Gold and Minion Name
+        if (minionName.indexOf(MINION_NAME.RANGED) !== -1) {
+            minionType = MINION_NAME.RANGED;
+            minionGold = MINION_GOLD.RANGED;
+
+        } else 
+        if (minionName.indexOf(MINION_NAME.MELEE) !== -1) {
+            minionType = MINION_NAME.MELEE;
+            minionGold = MINION_GOLD.MELEE;
+
+        } else 
+        if (minionName.indexOf(MINION_NAME.SIEGE) !== -1) {
+            let update = Math.floor((gameTime - MINION_GOLD.UPGRADE_START) / 90);
+            update = Math.min(update, MINION_GOLD.UPGRADE_MAX);
+
+            minionType = MINION_NAME.SIEGE;
+            minionGold = MINION_GOLD.SIEGE;
+            minionGold = minionGold + MINION_GOLD.UPGRADE_GOLD * update;
+
+        } else 
+        if (minionName.indexOf(MINION_NAME.SUPER) !== -1) {
+            const update = Math.floor((gameTime - MINION_GOLD.UPGRADE_START) / 90);
+            update = Math.min(update, MINION_GOLD.UPGRADE_MAX)
+
+            minionType = MINION_NAME.SUPER;
+            minionGold = MINION_GOLD.SUPER;
+            minionGold = minionGold + MINION_GOLD.UPGRADE_GOLD * update;
+        }
+
+        return {minionType, minionGold};
     }
 
     /*
@@ -236,61 +288,6 @@ const parseMinion = () => {
     }
 
     /*
-    * Parse and Calculate CS Count for early last hit, late last hit, and lost by Turret.
-    * [param] champ: champion stats that contains new cs count, and new gold count as well as location.
-    * [param] slice: slices of minions
-    */
-    const parseMinionSlice = (minionSlice, summonerName, turretSlices, gameTime) => {
-
-        const state = this.state;
-        const champStats = state.champStats[summonerName];
-
-        // Initialize
-        if (state.csCountLost.csEarlyHit[summonerName] == undefined) {
-            state.csCountLost.csLateHit[summonerName]       = 0;
-            state.csCountLost.csEarlyHit[summonerName]      = 0;
-            state.csCountLost.csLostByTurret[summonerName]  = 0;
-
-            state.csGoldLost.goldLateHit[summonerName]      = 0;
-            state.csGoldLost.goldEarlyHit[summonerName]     = 0;
-            state.csGoldLost.goldLostByTurret[summonerName] = 0;
-        }
-
-        // Get enemy minions dead.
-        let deadMinions = [];
-        for (const minion of Object.values(minionSlice)) {
-
-            // Find Dead minions among enemy minions.
-            if (
-                minion.health !== 0 || 
-                minion.team   === champStats.team ||
-                minion.team   === GAME_TEAM.NETURAL ||
-                minion.name.toUpperCase().indexOf(MINION_NAME.MINION) === -1
-            ) {
-                continue;
-            }
-            
-            // Dead minions can be last for several seconds.
-            const lastMinion = findLastMinion(minion);
-            if (lastMinion == undefined || lastMinion.health === 0) {
-                continue;
-            }
-
-            // TODO: Filter out minions in my lane.
-            deadMinions.push(minion);
-        }
-
-        // Calculate CS Count of Missing Cases
-        const minionsWrongHit = getMinionsWrongHit(deadMinions, minionSlice, turretSlices, champStats, gameTime);
-        const minionsEarlyHit = minionsWrongHit.filter(minion => minion.reason === MINION_NAME.EARLY_HIT);
-        const minionsLateHit  = minionsWrongHit.filter(minion => minion.reason === MINION_NAME.LATE_HIT);
-        state.csCountLost.csEarlyHit[summonerName]  += minionsEarlyHit.length;
-        state.csCountLost.csLateHit[summonerName]   += minionsLateHit.length;
-        state.csGoldLost.goldEarlyHit[summonerName] += minionsEarlyHit.reduce((sum, minion) => (sum + minion.gold), 0);
-        state.csGoldLost.goldLateHit[summonerName]  += minionsLateHit.reduce((sum, minion) => (sum + minion.gold), 0);
-    }
-
-    /*
     * Parse and Calculate CS Count for early  hit and last hit.
     * Minion get damaged taken by a Champion =>
     * - Champion should be near minion
@@ -304,7 +301,7 @@ const parseMinion = () => {
     * [param] champStats    : champion stats that contains new cs count, and new gold count as well as location.
     * [param] gameTime      : slices of minions
     */
-    const getMinionsWrongHit = (deadMinions, minionSlices, turretSlices, champStats, gameTime) => {
+    const getMissingMinions = ({deadMinions, minionSlices, turretSlices, champStats, gameTime}) => {
 
         if (champStats == undefined) {
             console.error("Error: Champion Stats is undefined");
@@ -353,8 +350,8 @@ const parseMinion = () => {
             }
 
             // Check if minion get damaged by Champion.
-            let   damageCalced = 0;
-            const damageTaken  = lastMinion.health - minion.health;
+            let   pureDamage      = 0;
+            const minionHealtDiff = lastMinion.health - minion.health;
 
             // Estimate Damage taken from ally Minion
             // TODO: We have to consider minion update - Attack Damage Update and Armor Update.
@@ -371,19 +368,19 @@ const parseMinion = () => {
                 // Estimate Damage from ally Minions
                 const allyMinionName = allyMinion.name.toUpperCase();
                 if (allyMinionName.indexOf(MINION_NAME.RANGED) !== -1 && dist <= ATTACK_RANGE.RANGED_MINION) {
-                    damageCalced += ATTACK_DAMAGE.RANGED_MINION;
+                    pureDamage += ATTACK_DAMAGE.RANGED_MINION;
 
                 } else 
                 if (allyMinionName.indexOf(MINION_NAME.MELEE)  !== -1 && dist <= ATTACK_RANGE.MELEE_MINION) {
-                    damageCalced += ATTACK_DAMAGE.MELEE_MINION;
+                    pureDamage += ATTACK_DAMAGE.MELEE_MINION;
 
                 } else 
                 if (allyMinionName.indexOf(MINION_NAME.SIEGE)  !== -1 && dist <= ATTACK_RANGE.SIEGE_MINION) {
-                    damageCalced += ATTACK_DAMAGE.SIEGE_MINION;
+                    pureDamage += ATTACK_DAMAGE.SIEGE_MINION;
 
                 } else 
                 if (allyMinionName.indexOf(MINION_NAME.SUPER)  !== -1 && dist <= ATTACK_RANGE.SUPER_MINION) {
-                    damageCalced += ATTACK_DAMAGE.SUPER_MINION;
+                    pureDamage += ATTACK_DAMAGE.SUPER_MINION;
                 }
             }
 
@@ -399,42 +396,13 @@ const parseMinion = () => {
                 // Calculate distance between ally minions and enemy minion.
                 const dist = distance({X: allyTurret.X, Y: allyTurret.Z}, {X: minion.X, Y: minion.Z});
                 if (dist <= ATTACK_RANGE.TURRET) {
-                    damageCalced += ATTACK_DAMAGE.TURRET;
+                    pureDamage += ATTACK_DAMAGE.TURRET;
                 }
             }
 
             // Calculate Gold from Minion
             let confident = 1;
-            let minionType = MINION_NAME.RANGED;
-            let minionGold = MINION_GOLD.RANGED;
-            const minionName = minion.name.toUpperCase();
-            if (minionName.indexOf(MINION_NAME.RANGED) !== -1) {
-                minionType = MINION_NAME.RANGED;
-                minionGold = MINION_GOLD.RANGED;
-
-            } else 
-            if (minionName.indexOf(MINION_NAME.MELEE) !== -1) {
-                minionType = MINION_NAME.MELEE;
-                minionGold = MINION_GOLD.MELEE;
-
-            } else 
-            if (minionName.indexOf(MINION_NAME.SIEGE) !== -1) {
-                let update = Math.floor((gameTime - MINION_GOLD.UPGRADE_START) / 90);
-                update = Math.min(update, MINION_GOLD.UPGRADE_MAX);
-
-                minionType = MINION_NAME.SIEGE;
-                minionGold = MINION_GOLD.SIEGE;
-                minionGold = minionGold + MINION_GOLD.UPGRADE_GOLD * update;
-
-            } else 
-            if (minionName.indexOf(MINION_NAME.SUPER) !== -1) {
-                const update = Math.floor((gameTime - MINION_GOLD.UPGRADE_START) / 90);
-                update = Math.min(update, MINION_GOLD.UPGRADE_MAX)
-
-                minionType = MINION_NAME.SUPER;
-                minionGold = MINION_GOLD.SUPER;
-                minionGold = minionGold + MINION_GOLD.UPGRADE_GOLD * update;
-            }
+            let {minionType, minionGold} = calcMinionGold(minion.name.toUpperCase(), gameTime);
 
             // Filter out adding a wrong minion as a early or late hit.
             // For example, Siege minion was killed by a champion.
@@ -446,7 +414,7 @@ const parseMinion = () => {
             }
 
             // if Damage is not enough, champion dealt damage onto it.
-            if (damageTaken >= damageCalced + ATTACK_DAMAGE.CHAMPION) {
+            if (minionHealtDiff >= pureDamage + ATTACK_DAMAGE.CHAMPION) {
                 missingMinions.push({
                     confident: confident,
                     type:      minionType,
@@ -484,14 +452,132 @@ const parseMinion = () => {
     /*
     * Parse and Calculate CS Count for early last hit, late last hit, and lost by Turret.
     * [param] deadMinions   : deadMinions in current minion slice
-    * [param] minionSlices  : All minions in current minion slice
     * [param] turretSlices  : slices of minions
     * [param] champStats    : champion stats that contains new cs count, and new gold count as well as location.
     * [param] gameTime      : slices of minions
     */
-    const getMinionsLostByTurret = (deadMinions, minionSlices, turretSlices, champStats, gameTime) => {
+    const getMinionsLostByTurret = ({deadMinions, turretSlices, champStats, gameTime}) => {
+        // Initialize
+        let minionsLostByTurret = [
+            {
+                type:      MINION_NAME.RANGED,     // Type of Minion
+                gold:      MINION_GOLD.RANGED,     // Gold of this minion
+                reason:    MINION_NAME.TURRET_HIT, // Reason of missing
+                confident: 0,                      // Confident of this value.
+            }
+        ];
+        minionsLostByTurret = [];
+
+        // TODO:Filter out turrets of other lane's.
+        const role = champStats.role;
+        const laneTurrets = turretSlices.filter(turret => {
+            return true;
+        });
+
+        // Filter Out Dead Minions outside Champion Range and within Turret Range.
+        const lostMinions = deadMinions.filter(minion => {
+    
+            const minionPosition = {X: minion.X, Y: minion.Z};
+            let   dist = distance(minionPosition, champStats.position);
+
+            // Filter out minions within Champion Range.
+            if (dist <= ATTACK_RANGE.CHAMPION_SKILL) {
+                return false;
+            }
+
+            // Finding minions within Turret Range only.
+            for (const turret of laneTurrets) {
+                
+                const turretPosition = {X: turret.X, Y: turret.Z};
+                dist = distance(minionPosition, turretPosition);
+                
+                if (dist <= ATTACK_RANGE.TURRET) {
+                    return true;
+                }
+            }
+
+            return false;
+        });
+        
+        // Calculate CS Gold Lost by Turret
+        for (const minion of lostMinions) {
+            let confident = 1;
+            let {minionType, minionGold} = calcMinionGold(minion.name.toUpperCase(), gameTime);
+
+            minionsLostByTurret.push({
+                confident: confident,
+                type:      minionType,
+                gold:      minionGold,
+                reason:    MINION_NAME.TURRET_HIT,
+            });
+        }
+
+        return minionsLostByTurret;
     }
 
+
+    /*
+    * Parse and Calculate CS Count for early last hit, late last hit, and lost by Turret.
+    * [param] champ: champion stats that contains new cs count, and new gold count as well as location.
+    * [param] slice: slices of minions
+    */
+    const parseMinionSlice = (minionSlice, summonerName, turretSlices, gameTime) => {
+
+        const state = this.state;
+        const champStats = state.champStats[summonerName];
+
+        // Initialize
+        if (state.csCountLost.csEarlyHit[summonerName] == undefined) {
+            state.csCountLost.csLateHit[summonerName]       = 0;
+            state.csCountLost.csEarlyHit[summonerName]      = 0;
+            state.csCountLost.csLostByTurret[summonerName]  = 0;
+
+            state.csGoldLost.goldLateHit[summonerName]      = 0;
+            state.csGoldLost.goldEarlyHit[summonerName]     = 0;
+            state.csGoldLost.goldLostByTurret[summonerName] = 0;
+        }
+
+        // Get enemy minions dead.
+        let deadMinions = [];
+        for (const minion of Object.values(minionSlice)) {
+
+            // Find Dead minions among enemy minions.
+            if (
+                minion.health !== 0                 || 
+                minion.team   === champStats.team   ||
+                minion.team   === GAME_TEAM.NETURAL ||
+                minion.name.toUpperCase().indexOf(MINION_NAME.MINION) === -1
+            ) {
+                continue;
+            }
+            
+            // Dead minions can be last for several seconds.
+            const lastMinion = findLastMinion(minion);
+            if (lastMinion == undefined || lastMinion.health === 0) {
+                continue;
+            }
+
+            // TODO: Filter out minions in my lane.
+            deadMinions.push(minion);
+        }
+
+        // Calculate CS Count of Missing Cases
+        const minionsMissed       = getMissingMinions({deadMinions, minionSlice, turretSlices, champStats, gameTime});
+        const minionsEarlyHit     = minionsMissed.filter(minion => minion.reason === MINION_NAME.EARLY_HIT);
+        const minionsLateHit      = minionsMissed.filter(minion => minion.reason === MINION_NAME.LATE_HIT);
+        const minionsLostByTurret = getMinionsLostByTurret({deadMinions, minionSlice, turretSlices, champStats, gameTime});
+
+        state.csCountLost.csEarlyHit     [summonerName] += minionsEarlyHit.    length;
+        state.csCountLost.csLateHit      [summonerName] += minionsLateHit.     length;
+        state.csCountLost.csLostByTurret [summonerName] += minionsLateHit.     length;
+        state.csGoldLost.goldEarlyHit    [summonerName] += minionsEarlyHit.    reduce((sum, minion) => (sum + minion.gold), 0);
+        state.csGoldLost.goldLateHit     [summonerName] += minionsLateHit.     reduce((sum, minion) => (sum + minion.gold), 0);
+        state.csGoldLost.goldLostByTurret[summonerName] += minionsLostByTurret.reduce((sum, minion) => (sum + minion.gold), 0);
+    }
+
+    /*
+    * Parse Command Line and Run Pipeline of parsing CS Count.
+    */
     const main = async () => {
         const gamePath = __dirname + "/" + getPathFromCmd();
         const gameData = await readGame(gamePath);
@@ -499,9 +585,9 @@ const parseMinion = () => {
 
         // Loop for all time slices
         for (const slice of Object.values(timeline)) {
-            const gameTime = slice.gameTime;
-            const minionSlices = slice.minions;
-            const turretSlices = slice.turrets;
+            const gameTime       = slice.gameTime;
+            const minionSlices   = slice.minions;
+            const turretSlices   = slice.turrets;
             const championSlices = slice.champions;
 
             // Loop all champions inside time slice
