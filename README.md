@@ -17,7 +17,7 @@ The json files should contain the following stats
 ## Run
 ```
 $ node parseMinion.js json_file_path
-> $ node parseMinion.js input/total.json
+>. $ node parseMinion.js input/total.json
 ```
 
 ## Appendix: Detailed Explanation
